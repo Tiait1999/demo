@@ -1,5 +1,6 @@
 package preprod.thrundz.fr;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -29,47 +31,44 @@ public class GestionTest {
     // visiter le site et se connecter
     @BeforeEach
     public void setup() {
-        driver = new ChromeDriver();
+        driver = new FirefoxDriver();
 
         gp = new gestionticketsPage(driver);
         driver.get("https://preprod.thrundrz.fr/admin/login");
         gp.loginPar("admin@thrundrz.fr", "Admin1234");
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         wait.until(ExpectedConditions.visibilityOfElementLocated(gp.getAffichage()));
-        System.out.println("=====================>");
         faker = new Faker();
 
         // preparer les jdd
         tickets = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            String tit=faker.internet().slug();
-            tickets.add(new Ticket(tit));
-            System.out.println("====================>"+tit);
-            System.out.println("=====================> arraylist add  ticket titre");
-
+            String tit = faker.internet().slug();
+            tickets.add(new Ticket(tit + "_" + i));
         }
     }
 
     @AfterEach
     public void tearDown() {
-        if (driver != null) {// designe que le navigateur est ouvert
-            driver.quit();// pour fermer le navigateur auromatiquement
-            driver = null;// comme le navigateur rest fermer le driver est null
-        }
+        // if (driver != null) {// designe que le navigateur est ouvert
+        // driver.quit();// pour fermer le navigateur auromatiquement
+        // driver = null;// comme le navigateur rest fermer le driver est null
+        // }
     }
 
     @Test
     @Tag("e2e")
     public void GestionTicket() {
-        System.out.println("=====================>"+"debut test");
+        System.out.println("=====================>" + "debut test");
 
         for (Ticket ticket : tickets) {
-            gp.setNvTitre(ticket.getTitreTicket(),driver);
+            gp.setNvTitre(ticket.getTitreTicket());
             gp.setBtnAdd();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(gp.getAffichage()));
+            gp.setTitre(ticket.getTitreTicket());
+            assertEquals(ticket.getTitreTicket(), gp.getElm().getText());
         }
-        System.out.println("=====================>"+"fin de test");
-
-
     }
 
 }
