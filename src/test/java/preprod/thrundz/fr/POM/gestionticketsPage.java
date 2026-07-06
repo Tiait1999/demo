@@ -5,12 +5,12 @@ import org.openqa.selenium.WebDriver;
 
 public class gestionticketsPage extends LoginPage {
    
-    WebDriver driver;
+    
     // locator
     By affichage = By.xpath("//h1[text()='Gestion des tickets & annonces']");
     By nvTitre = By.xpath("//input[@placeholder='Titre du nouveau ticket']");
     By btnAdd = By.xpath("//button[text()='+ Ajouter']");
-
+ 
      public gestionticketsPage(WebDriver driver) {
         super(driver);
     }
