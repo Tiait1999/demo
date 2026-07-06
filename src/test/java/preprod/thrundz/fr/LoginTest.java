@@ -19,7 +19,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import preprod.thrundz.fr.POM.LoginPage;
 import preprod.thrundz.fr.POM.gestionticketsPage;
 
-public class loginpom {
+public class LoginTest {
     WebDriver driver;// definir une variable globale
     gestionticketsPage gp;
 
