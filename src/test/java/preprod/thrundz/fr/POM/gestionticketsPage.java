@@ -5,17 +5,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class gestionticketsPage extends LoginPage {
-   
-    String titre;
+
     // locator
     By affichage = By.xpath("//h1[text()='Gestion des tickets & annonces']");
     By nvTitre = By.xpath("//input[@placeholder='Titre du nouveau ticket']");
     By btnAdd = By.xpath("//button[text()='+ Ajouter']");
-    By elm = By.xpath("//span[text()='"+this.titre+"']");
+    By AjouterAnnonce = By.xpath("(//button[text()='+ Ajouter une annonce'])[1]");
 
-     public gestionticketsPage(WebDriver driver) {
+    public gestionticketsPage(WebDriver driver) {
         super(driver);
-        titre="";
+
     }
 
     // methode
@@ -33,20 +32,12 @@ public class gestionticketsPage extends LoginPage {
     }
 
     public void setNvTitre(String titre) {
-        System.out.println("========> url current===>"+this.driver.getCurrentUrl());
+        System.out.println("========> url current===>" + this.driver.getCurrentUrl());
         driver.findElement(this.nvTitre).sendKeys(titre);
     }
 
     public void setBtnAdd() {
         this.driver.findElement(btnAdd).click();
-    }
-
-    public String getTitre() {
-        return titre;
-    }
-
-    public void setTitre(String titre) {
-        this.titre = titre;
     }
 
     public void setAffichage(By affichage) {
@@ -61,13 +52,14 @@ public class gestionticketsPage extends LoginPage {
         this.btnAdd = btnAdd;
     }
 
-    public WebElement getElm() {
+    public WebElement getElm(String titre) {
+        By elm = By.xpath("//span[text()='" + titre + "']");
         return this.driver.findElement(elm);
 
     }
 
-    public void setElm(By elm) {
-        this.elm = elm;
+    public By getAjoutAnnonce() {
+        return AjouterAnnonce;
     }
 
 }

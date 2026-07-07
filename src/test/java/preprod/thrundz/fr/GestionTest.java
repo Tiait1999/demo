@@ -62,12 +62,16 @@ public class GestionTest {
         System.out.println("=====================>" + "debut test");
 
         for (Ticket ticket : tickets) {
+
             gp.setNvTitre(ticket.getTitreTicket());
             gp.setBtnAdd();
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             wait.until(ExpectedConditions.visibilityOfElementLocated(gp.getAffichage()));
-            gp.setTitre(ticket.getTitreTicket());
-            assertEquals(ticket.getTitreTicket(), gp.getElm().getText());
+            assertEquals(ticket.getTitreTicket(), gp.getElm(ticket.getTitreTicket()).getText());
+
+            // cliquer sur ajouter annonce
+            driver.findElement(gp.getAjoutAnnonce()).click();  
+            break;
         }
     }
 
