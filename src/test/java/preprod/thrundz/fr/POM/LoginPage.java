@@ -21,6 +21,11 @@ public class LoginPage {
     }
     public void cliclog(){
     driver.findElement(login).click();
-    
-}
+    }
+
+    public void loginPar(String e, String p){
+        saisiremail(e);
+        saisirpass(p);
+        cliclog();
+    }
 }
